@@ -22,6 +22,10 @@ main(void)
   w = vec_add(u, v);
   vec_print(w);
 
+  vec_free(u);
+  vec_free(v);
+  vec_free(w);
+
   return 0;
 }
 
