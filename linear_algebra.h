@@ -4,8 +4,6 @@
 #include <stdlib.h>
 
 // TODO:
-// - vec_scale
-// - vec_dot
 // - Matrix
 
 typedef struct {
@@ -18,5 +16,7 @@ void vec_free(Vector *v);
 void vec_fill(Vector *v, float value);
 void vec_print(Vector *v);
 Vector *vec_add(Vector *u, Vector *v);
+Vector *vec_scale(Vector *v, float value);
+float vec_dot(Vector *u, Vector *u);
 
 #endif

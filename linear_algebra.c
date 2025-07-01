@@ -46,7 +46,7 @@ vec_add(Vector *u, Vector *v) {
   Vector *result = vec_create(u->size);
   size_t i;
 
-  if (u->size != v->size) {
+ if (u->size != v->size) {
     printf("\nERROR: Size mismatch in vec_add\n\n");
     return vec_create(u->size);
   }
@@ -54,3 +54,30 @@ vec_add(Vector *u, Vector *v) {
     result->data[i] = u->data[i] + v->data[i];
   return result;
 }
+
+Vector *
+vec_scale(Vector *v, float value){
+  Vector *reslut = vec_create(v->size);
+  size_t i;
+
+  for(i = 0; i < v->size; i++)
+    result->data[i] = value * v->data[i];
+  return result;
+}
+
+float 
+vec_dot(Vector *u, Vector *v){
+  float result;
+  size_t i;
+
+  if(u->size != v->size){
+    printf("\nERROR: Size mismatch in vec_dot\n\n");
+    return 0;
+  }
+  for (i = 0; i < v->size ; i++)
+    result += u->data[i] * v->data[i];
+  return result;
+}
+
+//norm_vect(Vector *v)
+//norm 
