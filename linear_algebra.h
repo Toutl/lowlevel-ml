@@ -31,5 +31,7 @@ void vec_print(Vector *v);
 Vector *vec_add(Vector *u, Vector *v);
 Vector *vec_scale(Vector *v, float value);
 float vec_dot(Vector *u, Vector *v);
+float vec_norm(Vector *v);
+Vector *vec_normalize(Vector *v);
 
 #endif

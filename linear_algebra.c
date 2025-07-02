@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "linear_algebra.h"
 
@@ -110,3 +111,29 @@ vec_dot(Vector *u, Vector *v)
     result += u->data[i] * v->data[i];
   return result;
 }
+
+float
+vec_norm(Vector *v)
+{
+  float result = 0.0f;
+
+  for (size_t i = 0; i < v->size; i++)
+    result += v->data[i] * v->data[i];
+  return sqrt(result);
+}
+
+Vector *
+vec_normalize(Vector *v)
+{
+  Vector *result = vec_create(v->size);
+  float norm = vec_norm(v);
+
+  if (norm == 0) {
+    printf("\nERROR: Zero vector can't be normalized\n\n");
+    return result;
+  }
+  for (size_t i = 0; i < v->size; i++)
+    result->data[i] = v->data[i] / norm;
+  return result;
+}
+
