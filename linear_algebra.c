@@ -4,6 +4,7 @@
 
 #include "linear_algebra.h"
 
+//Vectors
 VectorList *all_vectors = NULL;
 
 void
@@ -135,5 +136,21 @@ vec_normalize(Vector *v)
   for (size_t i = 0; i < v->size; i++)
     result->data[i] = v->data[i] / norm;
   return result;
+}
+
+
+// Matrices
+Matrix *
+mat_create(size_t n, size_t m)
+{
+  Matrix *A = malloc(sizeof(Matrix));
+  size_t i;
+
+  A->rows = n;
+  A->columns = m;
+  A->data = (float**)malloc(A->rows * sizeof(float*));
+  for (i = 0; i < A->rows; i++)
+    A->data[i] = (float*)malloc(A->columns * sizeof(float));
+  return A;
 }
 
