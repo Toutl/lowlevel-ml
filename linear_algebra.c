@@ -1,8 +1,37 @@
-#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "linear_algebra.h"
+
+VectorList *all_vectors = NULL;
+
+void
+veclist_add(Vector *v)
+{
+  if (all_vectors == NULL) {
+    all_vectors = malloc(sizeof *all_vectors);
+    all_vectors->capacity = 10;
+    all_vectors->count = 0;
+    all_vectors->data = calloc(all_vectors->capacity, sizeof *all_vectors->data);
+    return;
+  }
+  if (all_vectors->count == all_vectors->capacity) {
+    all_vectors->capacity *= 2;
+    all_vectors->data = realloc(all_vectors->data,
+                                all_vectors->capacity * sizeof *all_vectors->data);
+  }
+  all_vectors->data[all_vectors->count++] = v;
+}
+
+void
+veclist_free(void)
+{
+  for (size_t i = 0; i < all_vectors->count; i++)
+    vec_free(all_vectors->data[i]);
+  free(all_vectors->data);
+  free(all_vectors);
+  all_vectors = NULL;
+}
 
 Vector *
 vec_create(size_t n)
@@ -11,6 +40,7 @@ vec_create(size_t n)
 
   v->size = n;
   v->data = calloc(n, sizeof(float));
+  veclist_add(v);
   return v;
 }
 
@@ -46,7 +76,7 @@ vec_add(Vector *u, Vector *v) {
   Vector *result = vec_create(u->size);
   size_t i;
 
- if (u->size != v->size) {
+  if (u->size != v->size) {
     printf("\nERROR: Size mismatch in vec_add\n\n");
     return vec_create(u->size);
   }
@@ -56,28 +86,27 @@ vec_add(Vector *u, Vector *v) {
 }
 
 Vector *
-vec_scale(Vector *v, float value){
-  Vector *reslut = vec_create(v->size);
+vec_scale(Vector *v, float value)
+{
+  Vector *result = vec_create(v->size);
   size_t i;
 
-  for(i = 0; i < v->size; i++)
+  for (i = 0; i < v->size; i++)
     result->data[i] = value * v->data[i];
   return result;
 }
 
-float 
-vec_dot(Vector *u, Vector *v){
-  float result;
+float
+vec_dot(Vector *u, Vector *v)
+{
+  float result = 0.0f;
   size_t i;
 
-  if(u->size != v->size){
+  if (u->size != v->size){
     printf("\nERROR: Size mismatch in vec_dot\n\n");
     return 0;
   }
-  for (i = 0; i < v->size ; i++)
+  for (i = 0; i < v->size; i++)
     result += u->data[i] * v->data[i];
   return result;
 }
-
-//norm_vect(Vector *v)
-//norm 
