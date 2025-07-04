@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra
 LDFLAGS = -lm
 
-OBJS = main.o linear_algebra.o
+OBJS = main.o linalg.o
 
 app: $(OBJS)
 	$(CC) $(OBJS) -o app $(LDFLAGS)
