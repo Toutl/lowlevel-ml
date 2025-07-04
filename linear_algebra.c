@@ -15,7 +15,6 @@ veclist_add(Vector *v)
     all_vectors->capacity = 10;
     all_vectors->count = 0;
     all_vectors->data = calloc(all_vectors->capacity, sizeof *all_vectors->data);
-    return;
   }
   if (all_vectors->count == all_vectors->capacity) {
     all_vectors->capacity *= 2;
@@ -28,7 +27,9 @@ veclist_add(Vector *v)
 void
 veclist_free(void)
 {
-  for (size_t i = 0; i < all_vectors->count; i++)
+  size_t i;
+
+  for (i = 0; i < all_vectors->count; i++)
     vec_free(all_vectors->data[i]);
   free(all_vectors->data);
   free(all_vectors);
@@ -140,6 +141,37 @@ vec_normalize(Vector *v)
 
 
 // Matrices
+MatrixList *all_matrices = NULL;
+
+void
+matlist_add(Matrix * A)
+{
+  if (all_matrices == NULL) {
+    all_matrices = malloc(sizeof *all_matrices);
+    all_matrices->capacity = 10;
+    all_matrices->count = 0;
+    all_matrices->data = calloc(all_matrices->capacity, sizeof *all_matrices->data);
+  }
+  if (all_matrices->count == all_matrices->capacity) {
+    all_matrices->capacity *= 2;
+    all_matrices->data = realloc(all_matrices->data,
+                                 all_matrices->capacity * sizeof *all_matrices->data);
+  }
+  all_matrices->data[all_matrices->count++] = A;
+}
+
+void
+matlist_free(void)
+{
+  size_t i;
+
+  for (i = 0; i < all_matrices->count; i++)
+    mat_free(all_matrices->data[i]);
+  free(all_matrices->data);
+  free(all_matrices);
+  all_matrices = NULL;
+}
+
 Matrix *
 mat_create(size_t n, size_t m)
 {
@@ -154,3 +186,13 @@ mat_create(size_t n, size_t m)
   return A;
 }
 
+void
+mat_free(Matrix *A)
+{
+  size_t i;
+
+  for (i = 0; i < A->rows; i++)
+    free(A->data[i]);
+  free(A->data);
+  free(A);
+}
