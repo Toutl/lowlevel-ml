@@ -5,35 +5,17 @@
 int
 main(void)
 {
-  Vector *u, *v, *w, *z;
-  float a = 2.0f;
-  size_t n = 3;
+  Matrix *A, *B;
+  float a = 3.5f;
+  size_t n = 3, m = 5;
+ 
+  A = mat_create(2, 3);
+  B = mat_create(n, m);
 
-  u = vec_create(n);
-  v = vec_create(n);
-  w = vec_create(n);
-  z = vec_create(n);
+  mat_fill(A, a);
+  mat_print(A);
+  mat_print(B);
 
-  u->data[0] = 3.0f;
-  u->data[1] = 5.7f;
-  u->data[2] = 7.0f;
-  vec_fill(v, 1.0);
-  vec_print(u);
-  vec_print(v);
-
-  w = vec_scale(vec_add(u, v), a);
-  printf("Scaled added: ");
-  vec_print(w);
-
-  z = vec_normalize(w);
-  printf("Norm %.2f\n", vec_norm(w));
-  printf("Normalized: ");
-  vec_print(z);
-
-  a = vec_norm(z);
-  printf("Norm: %.2f\n", a);
-
-  veclist_free();
+  matlist_free();
   return 0;
 }
-

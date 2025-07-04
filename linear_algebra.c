@@ -182,7 +182,8 @@ mat_create(size_t n, size_t m)
   A->columns = m;
   A->data = (float**)malloc(A->rows * sizeof(float*));
   for (i = 0; i < A->rows; i++)
-    A->data[i] = (float*)malloc(A->columns * sizeof(float));
+    A->data[i] = (float*)calloc(A->columns, sizeof(float));
+  matlist_add(A);
   return A;
 }
 
@@ -195,4 +196,30 @@ mat_free(Matrix *A)
     free(A->data[i]);
   free(A->data);
   free(A);
+}
+
+void
+mat_fill(Matrix *A, float value)
+{
+  size_t i, j;
+
+  for (i = 0; i < A->rows; i++) {
+    for (j = 0; j < A->columns; j++)
+      A->data[i][j] = value;
+  }
+}
+
+void
+mat_print(Matrix *A)
+{
+  size_t i, j;
+
+  printf("[");
+  for (i = 0; i < A->rows; i++) {
+    for (j = 0; j < A->columns; j++)
+      printf(" %5.2f", A->data[i][j]);
+    if (i < A->rows - 1)
+      printf("\n ");
+  }
+  printf(" ]\n");
 }
