@@ -187,3 +187,55 @@ mat_print(Matrix *M)
   }
   printf(" ]\n");
 }
+
+void
+vec_set(Vector *v, size_t index, double value)
+{
+  if (!v || index >= v->size) return;
+
+  v->data[index] = value;
+}
+
+void
+mat_set(Matrix *M, size_t row, size_t col, double value)
+{
+  if (!M || row >= M->rows || col >= M->cols) return;
+
+  M->data[row][col] = value;
+}
+
+double
+vec_get(Vector *v, size_t index)
+{
+  if (!v || index >= v->size) return 0.0f;
+
+  return v->data[index];
+}
+
+double
+mat_get(Matrix *M, size_t row, size_t col)
+{
+  if (!M || row > M->rows || col > M->cols) return 0.0f;
+
+  return M->data[row][col];
+}
+
+void
+vec_fill(Vector *v, double value)
+{
+  if (!v) return;
+
+  for (size_t i = 0; i < v->size; i++)
+    v->data[i] = value;
+}
+
+void
+mat_fill(Matrix *M, double value)
+{
+  if (!M) return;
+
+  for (size_t i = 0; i < M->rows; i++) {
+    for (size_t j = 0; j < M->cols; j++)
+      M->data[i][j] = value;
+  }
+}

@@ -49,12 +49,12 @@ void matlist_free(void);
 void vec_print(Vector *v);
 void mat_print(Matrix *M);
 
-// void vec_set(Vector *v, size_t index, double value);
-// void mat_set(Matrix *M, size_t row, size_t col, double value);
-// double vec_get(Vector *v, size_t index);
-// double mat_get(Matrix *M, size_t row, size_t col);
-// void vec_fill(Vector *v, double value);
-// void mat_fill(Matrix *M, double value);
+void vec_set(Vector *v, size_t index, double value);
+void mat_set(Matrix *M, size_t row, size_t col, double value);
+double vec_get(Vector *v, size_t index);
+double mat_get(Matrix *M, size_t row, size_t col);
+void vec_fill(Vector *v, double value);
+void mat_fill(Matrix *M, double value);
 
 // Vector *vec_add(Vector *a, Vector *b);
 // Matrix *mat_add(Matrix *A, Matrix *B);
