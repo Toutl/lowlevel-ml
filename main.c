@@ -7,12 +7,19 @@ int
 main(void)
 {
   Vector *v;
+  Matrix *M;
   // double = 1.0f;
 
   v = vec_create(4);
+  printf("Vector: ");
   vec_print(v);
 
-  vec_free(v);
+  M = mat_create(3, 5);
+  printf("Matrix:\n");
+  mat_print(M);
 
+
+  veclist_free();
+  matlist_free();
   return 0;
 }
