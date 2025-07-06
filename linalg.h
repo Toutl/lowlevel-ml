@@ -61,9 +61,9 @@ Matrix *mat_add(Matrix *A, Matrix *B);
 Vector *vec_scale(Vector *v, double scalar);
 Matrix *mat_scale(Matrix *M, double scalar);
 
-// double vec_dot(Vector *a, Vector *b);
-// double vec_norm(Vector *v);
-// Vector *vec_normalize(Vector *v);
+double vec_dot(Vector *a, Vector *b);
+double vec_norm(Vector *v);
+Vector *vec_normalize(Vector *v);
 
 // Vector *mat_vec_multiply(Matrix *M, Vector *v);
 

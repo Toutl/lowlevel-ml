@@ -295,3 +295,43 @@ mat_scale(Matrix *M, double scalar)
   }
   return result;
 }
+
+double
+vec_dot(Vector *a, Vector *b)
+{
+  if (!a || !b || a->size != b->size) return 0.0f;
+
+  double result = 0.0f;
+
+  for (size_t i = 0; i < a->size; i++)
+    result += a->data[i] * b->data[i];
+  return result;
+}
+
+double
+vec_norm(Vector *v)
+{
+  if (!v) return 0.0f;
+
+  double result = 0.0f;
+
+  for (size_t i = 0; i < v->size; i++)
+    result += v->data[i] * v->data[i];
+  return sqrt(result);
+}
+
+Vector *
+vec_normalize(Vector *v)
+{
+  if (!v) return NULL;
+
+  double norm = vec_norm(v);
+  if (norm == 0) return NULL;
+
+  Vector *result = vec_create(v->size);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->size; i++)
+    result->data[i] = v->data[i] / norm;
+  return result;
+}
