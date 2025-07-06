@@ -56,10 +56,10 @@ double mat_get(Matrix *M, size_t row, size_t col);
 void vec_fill(Vector *v, double value);
 void mat_fill(Matrix *M, double value);
 
-// Vector *vec_add(Vector *a, Vector *b);
-// Matrix *mat_add(Matrix *A, Matrix *B);
-// Vector *vec_scale(Vector *v, double scalar);
-// Matrix *mat_scale(Matrix *M, double scalar);
+Vector *vec_add(Vector *a, Vector *b);
+Matrix *mat_add(Matrix *A, Matrix *B);
+Vector *vec_scale(Vector *v, double scalar);
+Matrix *mat_scale(Matrix *M, double scalar);
 
 // double vec_dot(Vector *a, Vector *b);
 // double vec_norm(Vector *v);

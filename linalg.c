@@ -239,3 +239,59 @@ mat_fill(Matrix *M, double value)
       M->data[i][j] = value;
   }
 }
+
+Vector *
+vec_add(Vector *a, Vector *b)
+{
+  if (!a || !b || a->size != b->size) return NULL;
+
+  Vector *result = vec_create(a->size);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->size; i++)
+    result->data[i] = a->data[i] + b->data[i];
+  return result;
+}
+
+Matrix *
+mat_add(Matrix *A, Matrix *B)
+{
+  if (!A || !B || A->rows != B->rows || A->cols != B->cols) return NULL;
+
+  Matrix *result = mat_create(A->rows, A->cols);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->rows; i++) {
+    for (size_t j = 0; j < result->cols; j++)
+      result->data[i][j] = A->data[i][j] + B->data[i][j];
+  }
+  return result;
+}
+
+Vector *
+vec_scale(Vector *v, double scalar)
+{
+  if (!v) return NULL;
+
+  Vector *result = vec_create(v->size);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->size; i++)
+    result->data[i] = scalar * v->data[i];
+  return result;
+}
+
+Matrix *
+mat_scale(Matrix *M, double scalar)
+{
+  if (!M) return NULL;
+
+  Matrix *result = mat_create(M->rows, M->cols);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->rows; i++) {
+    for (size_t j = 0; j < result->cols; j++)
+      result->data[i][j] = scalar * M->data[i][j];
+  }
+  return result;
+}
