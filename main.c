@@ -6,30 +6,29 @@
 int
 main(void)
 {
-  Vector *v = vec_create(3);
-  Matrix *M = mat_create(3, 3);
+  Matrix *A = mat_create(2, 3), *B = mat_create(3, 2);
 
-  mat_set(M, 0, 0, 1.0f);
-  mat_set(M, 0, 1, 0.0f);
-  mat_set(M, 0, 2, -2.0f);
-  mat_set(M, 1, 0, 0.0f);
-  mat_set(M, 1, 1, 3.0f);
-  mat_set(M, 1, 2, -1.0f);
-  mat_set(M, 2, 0, 1.0f);
-  mat_set(M, 2, 1, 2.0f);
-  mat_set(M, 2, 2, 1.0f);
+  mat_set(A, 0, 0, 1.0f);
+  mat_set(A, 0, 1, 2.0f);
+  mat_set(A, 0, 2, 3.0f);
+  mat_set(A, 1, 0, 4.0f);
+  mat_set(A, 1, 1, 5.0f);
+  mat_set(A, 1, 2, 6.0f);
 
-  vec_set(v, 0, 3.0f);
-  vec_set(v, 1, -1.0f);
-  vec_set(v, 2, 4.0f);
+  mat_set(B, 0, 0, 10.0f);
+  mat_set(B, 0, 1, 11.0f);
+  mat_set(B, 1, 0, 20.0f);
+  mat_set(B, 1, 1, 21.0f);
+  mat_set(B, 2, 0, 30.0f);
+  mat_set(B, 2, 1, 31.0f);
 
-  printf("v = ");
-  vec_print(v);
-  printf("M = \n");
-  mat_print(M);
+  printf("A = \n");
+  mat_print(A);
+  printf("B = \n");
+  mat_print(B);
 
-  printf("\nMv =\n");
-  vec_print(mat_vec_multiply(M, v));
+  printf("\nAB =\n");
+  mat_print(mat_multiply(A, B));
 
   veclist_free();
   matlist_free();

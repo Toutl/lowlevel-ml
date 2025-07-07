@@ -350,3 +350,20 @@ mat_vec_multiply(Matrix *M, Vector *v)
   }
   return result;
 }
+
+Matrix *
+mat_multiply(Matrix *A, Matrix *B)
+{
+  if (!A || !B || A->cols != B->rows) return NULL;
+
+  Matrix *result = mat_create(A->rows, B->cols);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->rows; i++) {
+    for (size_t j = 0; j < result->cols; j++) {
+      for (size_t k = 0; k < A->cols; k++)
+        result->data[i][j] += A->data[i][k] * B->data[k][j];
+    }
+  }
+  return result;
+}

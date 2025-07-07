@@ -67,7 +67,7 @@ Vector *vec_normalize(Vector *v);
 
 Vector *mat_vec_multiply(Matrix *M, Vector *v);
 
-// Matrix *mat_multiply(Matrix *A, Matrix *B);
+Matrix *mat_multiply(Matrix *A, Matrix *B);
 // Matrix *mat_transpose(Matrix *M);
 // Matrix *mat_identity(Matrix *M);
 
