@@ -335,3 +335,18 @@ vec_normalize(Vector *v)
     result->data[i] = v->data[i] / norm;
   return result;
 }
+
+Vector *
+mat_vec_multiply(Matrix *M, Vector *v)
+{
+  if (!M || !v || M->cols != v->size) return NULL;
+
+  Vector *result = vec_create(M->rows);
+  if (!result) return NULL;
+
+  for (size_t i = 0; i < result->size; i++) {
+    for (size_t j = 0; j < v->size; j++)
+      result->data[i] += M->data[i][j] * v->data[j];
+  }
+  return result;
+}

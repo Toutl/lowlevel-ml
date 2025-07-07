@@ -65,7 +65,7 @@ double vec_dot(Vector *a, Vector *b);
 double vec_norm(Vector *v);
 Vector *vec_normalize(Vector *v);
 
-// Vector *mat_vec_multiply(Matrix *M, Vector *v);
+Vector *mat_vec_multiply(Matrix *M, Vector *v);
 
 // Matrix *mat_multiply(Matrix *A, Matrix *B);
 // Matrix *mat_transpose(Matrix *M);
