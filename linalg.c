@@ -234,10 +234,9 @@ mat_fill(Matrix *M, double value)
 {
   if (!M) return;
 
-  for (size_t i = 0; i < M->rows; i++) {
+  for (size_t i = 0; i < M->rows; i++)
     for (size_t j = 0; j < M->cols; j++)
       M->data[i][j] = value;
-  }
 }
 
 Vector *
@@ -261,10 +260,9 @@ mat_add(Matrix *A, Matrix *B)
   Matrix *result = mat_create(A->rows, A->cols);
   if (!result) return NULL;
 
-  for (size_t i = 0; i < result->rows; i++) {
+  for (size_t i = 0; i < result->rows; i++)
     for (size_t j = 0; j < result->cols; j++)
       result->data[i][j] = A->data[i][j] + B->data[i][j];
-  }
   return result;
 }
 
@@ -289,10 +287,9 @@ mat_scale(Matrix *M, double scalar)
   Matrix *result = mat_create(M->rows, M->cols);
   if (!result) return NULL;
 
-  for (size_t i = 0; i < result->rows; i++) {
+  for (size_t i = 0; i < result->rows; i++)
     for (size_t j = 0; j < result->cols; j++)
       result->data[i][j] = scalar * M->data[i][j];
-  }
   return result;
 }
 
@@ -344,10 +341,9 @@ mat_vec_multiply(Matrix *M, Vector *v)
   Vector *result = vec_create(M->rows);
   if (!result) return NULL;
 
-  for (size_t i = 0; i < result->size; i++) {
+  for (size_t i = 0; i < result->size; i++)
     for (size_t j = 0; j < v->size; j++)
       result->data[i] += M->data[i][j] * v->data[j];
-  }
   return result;
 }
 
@@ -359,12 +355,10 @@ mat_multiply(Matrix *A, Matrix *B)
   Matrix *result = mat_create(A->rows, B->cols);
   if (!result) return NULL;
 
-  for (size_t i = 0; i < result->rows; i++) {
-    for (size_t j = 0; j < result->cols; j++) {
+  for (size_t i = 0; i < result->rows; i++)
+    for (size_t j = 0; j < result->cols; j++)
       for (size_t k = 0; k < A->cols; k++)
         result->data[i][j] += A->data[i][k] * B->data[k][j];
-    }
-  }
   return result;
 }
 
@@ -379,22 +373,16 @@ mat_transpose(Matrix *M)
   for(size_t i = 0; i < result->rows; i++)
     for(size_t j = 0; j < result->cols; j++)
       result->data[i][j] = M->data[j][i];
-
   return result;
 }
 
 Matrix *
-mat_identity(int rows, int cols)
+mat_identity(size_t order)
 {
-  Matrix *result = mat_create(rows,cols);
+  Matrix *result = mat_create(order, order);
   if (!result) return NULL;
 
-  for(size_t i = 0; i < result->rows; i++)
-    for(size_t j = 0; j < result->cols; j++){
-      if(i==j)
-        result->data[i][j] = 1.0f;
-      else
-        result->data[i][j] =0.0f;
-    }
+  for (size_t i = 0; i < order; i++)
+    result->data[i][i] = 1.0f;
   return result;
 }

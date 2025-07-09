@@ -69,6 +69,6 @@ Vector *mat_vec_multiply(Matrix *M, Vector *v);
 
 Matrix *mat_multiply(Matrix *A, Matrix *B);
 Matrix *mat_transpose(Matrix *M);
-Matrix *mat_identity(int rows, int cols);
+Matrix *mat_identity(size_t order);
 
 #endif
