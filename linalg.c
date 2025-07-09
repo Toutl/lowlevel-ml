@@ -367,3 +367,34 @@ mat_multiply(Matrix *A, Matrix *B)
   }
   return result;
 }
+
+Matrix *
+mat_transpose(Matrix *M)
+{
+  if (!M) return NULL;
+
+  Matrix *result = mat_create(M->cols, M->rows);
+  if (!result) return NULL;
+
+  for(size_t i = 0; i < result->rows; i++)
+    for(size_t j = 0; j < result->cols; j++)
+      result->data[i][j] = M->data[j][i];
+
+  return result;
+}
+
+Matrix *
+mat_identity(int rows, int cols)
+{
+  Matrix *result = mat_create(rows,cols);
+  if (!result) return NULL;
+
+  for(size_t i = 0; i < result->rows; i++)
+    for(size_t j = 0; j < result->cols; j++){
+      if(i==j)
+        result->data[i][j] = 1.0f;
+      else
+        result->data[i][j] =0.0f;
+    }
+  return result;
+}

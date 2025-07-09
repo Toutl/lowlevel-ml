@@ -7,21 +7,21 @@ int
 main(void)
 {
   Matrix *A = mat_create(2, 3), *B = mat_create(3, 2);
-
+  
   mat_set(A, 0, 0, 1.0f);
   mat_set(A, 0, 1, 2.0f);
   mat_set(A, 0, 2, 3.0f);
   mat_set(A, 1, 0, 4.0f);
   mat_set(A, 1, 1, 5.0f);
   mat_set(A, 1, 2, 6.0f);
-
+  
   mat_set(B, 0, 0, 10.0f);
   mat_set(B, 0, 1, 11.0f);
   mat_set(B, 1, 0, 20.0f);
   mat_set(B, 1, 1, 21.0f);
   mat_set(B, 2, 0, 30.0f);
   mat_set(B, 2, 1, 31.0f);
-
+  
   printf("A = \n");
   mat_print(A);
   printf("B = \n");
@@ -29,6 +29,12 @@ main(void)
 
   printf("\nAB =\n");
   mat_print(mat_multiply(A, B));
+  printf("\nAT =\n");
+  mat_print(mat_transpose(A));
+
+  Matrix *I = mat_identity(3,3);
+  printf("\nI =\n");
+  mat_print(I);
 
   veclist_free();
   matlist_free();
