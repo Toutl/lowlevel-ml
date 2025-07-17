@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #include "linalg.h"
 
@@ -186,6 +187,53 @@ mat_print(Matrix *M)
       printf("\n ");
   }
   printf(" ]\n");
+}
+
+Vector *
+vec_read(const char file[], size_t position)
+{
+  FILE *fp = fopen(file, "r");
+  if (!fp) return NULL;
+
+  char buffer[1024];
+
+  for (size_t line = 0; line < position; line++) {
+    if (!fgets(buffer, sizeof buffer, fp)) {
+      fclose(fp);
+      return NULL;
+    }
+  }
+
+  if (buffer[0] != 'v') {
+    fclose(fp);
+    return NULL;
+  }
+
+  size_t size = (size_t)atoi(&buffer[2]);
+  Vector *v = vec_create(size);
+  if (!v) {
+    fclose(fp);
+    return NULL;
+  }
+
+  if (!fgets(buffer, sizeof buffer, fp)) {
+    fclose(fp);
+    return NULL;
+  }
+
+  char num[100];
+  int i = 0, vi = 0;
+  for (char *c = buffer; *c != '\0'; c++) {
+    if (*c != ' ' && *c != '\n' && *c != '\0') {
+      num[i++] = *c;
+    } else {
+      vec_set(v, vi++, atof(num));
+      i = 0;
+      memset(num, 0, sizeof num);
+    }
+  }
+  fclose(fp);
+  return v;
 }
 
 void

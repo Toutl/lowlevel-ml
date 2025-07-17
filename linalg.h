@@ -48,6 +48,8 @@ void matlist_free(void);
 
 void vec_print(Vector *v);
 void mat_print(Matrix *M);
+Vector *vec_read(const char file[], size_t position);
+// Matrix *mat_read(char file[], size_t position);
 
 void vec_set(Vector *v, size_t index, double value);
 void mat_set(Matrix *M, size_t row, size_t col, double value);
