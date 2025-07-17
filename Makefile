@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -std=c17 -Wall -Wextra
 LDFLAGS = -lm
 
 OBJS = main.o linalg.o
