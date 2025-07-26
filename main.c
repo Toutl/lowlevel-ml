@@ -6,10 +6,10 @@
 int
 main(void)
 {
-  Vector *u = vec_read("test_data.csv", 4);
-  Vector *v = vec_read("test_data.csv", 1);
-  vec_print(u);
-  vec_print(v);
+  char file[] = "data";
+  Vector *u = vec_read(file, 4);
+  Vector *v = vec_read(file, 7);
+  vec_print(vec_add(u, v));
 
   veclist_free();
   return 0;

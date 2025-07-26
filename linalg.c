@@ -190,7 +190,7 @@ mat_print(Matrix *M)
 }
 
 Vector *
-vec_read(const char file[], size_t position)
+vec_read(const char *file, size_t position)
 {
   FILE *fp = fopen(file, "r");
   if (!fp) return NULL;
@@ -209,8 +209,17 @@ vec_read(const char file[], size_t position)
     return NULL;
   }
 
-  size_t size = (size_t)atoi(&buffer[2]);
-  Vector *v = vec_create(size);
+  char *size_start = buffer + 1;
+  while (*size_start == ' ' || *size_start == '\t') size_start++;
+
+  char *endptr;
+  long size = strtol(size_start, &endptr, 10);
+  if (size <= 0 || endptr == size_start) {
+    fclose(fp);
+    return NULL;
+  }
+
+  Vector *v = vec_create((size_t)size);
   if (!v) {
     fclose(fp);
     return NULL;
@@ -221,18 +230,23 @@ vec_read(const char file[], size_t position)
     return NULL;
   }
 
-  char num[100];
-  int i = 0, vi = 0;
-  for (char *c = buffer; *c != '\0'; c++) {
-    if (*c != ' ' && *c != '\n' && *c != '\0') {
-      num[i++] = *c;
-    } else {
-      vec_set(v, vi++, atof(num));
-      i = 0;
-      memset(num, 0, sizeof num);
-    }
+  char *c = buffer;
+  size_t i = 0;
+  while (i < (size_t)size) {
+    while (*c == ' ' || *c == '\t' || *c == '\n') c++;
+    if (!*c) break;
+
+    char *end;
+    double value = strtod(c, &end);
+    if (end == c) break;
+    c = end;
+
+    vec_set(v, i++, value);
   }
+
   fclose(fp);
+
+  if (i != (size_t)size) return NULL;
   return v;
 }
 
