@@ -7,9 +7,8 @@ int
 main(void)
 {
   char file[] = "data";
-  Vector *u = vec_read(file, 4);
-  Vector *v = vec_read(file, 7);
-  vec_print(vec_add(u, v));
+  Matrix *M = mat_read(file, 15);
+  mat_print(M);
 
   veclist_free();
   return 0;

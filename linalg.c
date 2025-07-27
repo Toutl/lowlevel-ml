@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <string.h>
 
 #include "linalg.h"
 
@@ -209,12 +208,12 @@ vec_read(const char *file, size_t position)
     return NULL;
   }
 
-  char *size_start = buffer + 1;
-  while (*size_start == ' ' || *size_start == '\t') size_start++;
+  char *start = buffer + 1;
+  while (*start == ' ' || *start == '\t') start++;
 
   char *endptr;
-  long size = strtol(size_start, &endptr, 10);
-  if (size <= 0 || endptr == size_start) {
+  long size = strtol(start, &endptr, 10);
+  if (size <= 0 || endptr == start) {
     fclose(fp);
     return NULL;
   }
@@ -248,6 +247,83 @@ vec_read(const char *file, size_t position)
 
   if (i != (size_t)size) return NULL;
   return v;
+}
+
+Matrix *
+mat_read(const char *file, size_t position)
+{
+  FILE *fp = fopen(file, "r");
+  if (!fp) return NULL;
+
+  char buffer[1024];
+
+  for (size_t line = 0; line < position; line++) {
+    if (!fgets(buffer, sizeof buffer, fp)) {
+      fclose(fp);
+      return NULL;
+    }
+  }
+
+  if (buffer[0] != 'm') {
+    fclose(fp);
+    return NULL;
+  }
+
+  char *c = buffer + 1;
+  size_t i, rows, cols;
+  for (i = 0; i < 2; i++) {
+    while (*c == ' ' || *c == '\t' || *c == '\n') c++;
+    if (!*c) break;
+
+    char *end;
+    long tmp = strtol(c, &end, 10);
+    if (end == c) break;
+    c = end;
+
+    (i) ? (cols = (size_t)tmp) : (rows = (size_t)tmp);  // wait
+  }
+  if (i < 2) {
+    fclose(fp);
+    return NULL;
+  }
+
+  Matrix *M = mat_create(rows, cols);
+  if (!M) {
+    fclose(fp);
+    return NULL;
+  }
+
+  size_t row;
+  for (row = 0; row < rows; row++) {
+    if (!fgets(buffer, sizeof buffer, fp)) {
+      fclose(fp);
+      return NULL;
+    }
+
+    char *c = buffer;
+    size_t col = 0;
+    while (col < cols) {
+      while (*c == ' ' || *c == '\t' || *c == '\n') c++;
+      if (!*c) break;
+
+      char *end;
+      double value = strtod(c, &end);
+      if (end == c) break;
+      c = end;
+
+      mat_set(M, row, col++, value);
+    }
+
+    if (col != cols) {
+      fclose(fp);
+      return NULL;
+    }
+  }
+
+  fclose(fp);
+
+  if (row != rows) return NULL;
+  return M;
 }
 
 void
